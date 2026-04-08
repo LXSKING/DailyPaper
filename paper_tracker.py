@@ -145,7 +145,7 @@ def summarize_papers_with_llm(papers):
         return "错误：未找到 LLM_API_KEY 环境变量"
 
     # 2. 修正 base_url
-    client = OpenAI(api_key=LLM_API_KEY, base_url="https://api.siliconflow.cn/v1")
+    client = OpenAI(api_key=LLM_API_KEY, base_url="https://api.siliconflow.cn/v1/chat/completions")
 
     report_content = ""
     for idx, paper in enumerate(papers):
