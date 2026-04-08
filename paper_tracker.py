@@ -140,11 +140,26 @@ def get_paper_recommendations():
 
 def summarize_papers_with_llm(papers):
     """调用大模型进行总结"""
-    print(f"DEBUG: 正在调用 LLM，API Key 长度: {len(LLM_API_KEY) if LLM_API_KEY else 0}")
+    # 1. 检查 API KEY 是否存在
+    if not LLM_API_KEY:
+        return "错误：未找到 LLM_API_KEY 环境变量"
+
+    # 2. 修正 base_url
     client = OpenAI(api_key=LLM_API_KEY, base_url="https://api.siliconflow.cn/v1")
 
     report_content = ""
     for idx, paper in enumerate(papers):
+        try:
+            response = client.chat.completions.create(
+                model="deepseek-ai/DeepSeek-V3", 
+                messages=[{"role": "user", "content": prompt}],
+                timeout=60 # 建议增加超时设置
+            )
+            summary = response.choices[0].message.content
+        except Exception as e:
+            print(f"LLM 请求失败 (第 {idx+1} 篇): {e}")
+            summary = "**[总结失败]**：由于 API 响应异常，无法生成总结。"
+            
         title = paper.get("title", "无标题")
         date = paper.get("publicationDate") or paper.get("year") or "未知日期"
         abstract_text = (paper.get("abstract") or "").strip()
