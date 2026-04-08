@@ -210,7 +210,7 @@ TLDR: {tldr_text or "无"}
 """
 
         response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": prompt}]
+            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": "你是一个有帮助的助手。"}]
         )
 
         summary = response.choices[0].message.content
