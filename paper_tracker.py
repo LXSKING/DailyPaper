@@ -194,7 +194,7 @@ TLDR: {tldr_text or "无"}
 """
 
         response = client.chat.completions.create(
-            model="deepseek-chat", messages=[{"role": "user", "content": prompt}]
+            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": prompt}]
         )
 
         summary = response.choices[0].message.content
