@@ -145,14 +145,14 @@ def summarize_papers_with_llm(papers):
         return "错误：未找到 LLM_API_KEY 环境变量"
 
     # 2. 修正 base_url
-    client = OpenAI(api_key=LLM_API_KEY, base_url="https://api.siliconflow.cn/v1/chat/completions")
+    client = OpenAI(api_key=LLM_API_KEY, base_url="https://api.siliconflow.cn/v1")
 
     report_content = ""
     for idx, paper in enumerate(papers):
         try:
             response = client.chat.completions.create(
                 model="deepseek-ai/DeepSeek-V3", 
-                messages=[{"role": "user", "content": prompt}],
+                messages=[{"role": "user", "content": "你是一个有帮助的助手"}],
                 timeout=60 # 建议增加超时设置
             )
             summary = response.choices[0].message.content
@@ -210,7 +210,7 @@ TLDR: {tldr_text or "无"}
 """
 
         response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": "你是一个有帮助的助手。"}]
+            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": "你是一个有帮助的助手"}]
         )
 
         summary = response.choices[0].message.content
