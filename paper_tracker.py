@@ -152,7 +152,7 @@ def summarize_papers_with_llm(papers):
         try:
             response = client.chat.completions.create(
                 model="deepseek-ai/DeepSeek-V3", 
-                messages=[{"role": "user", "content": "你是一个有帮助的助手"}],
+                messages=[{"role": "user", "content": prompt}],
                 timeout=60 # 建议增加超时设置
             )
             summary = response.choices[0].message.content
@@ -210,7 +210,7 @@ TLDR: {tldr_text or "无"}
 """
 
         response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": "你是一个有帮助的助手"}]
+            model="deepseek-ai/DeepSeek-V3", messages=[{"role": "user", "content": prompt}]
         )
 
         summary = response.choices[0].message.content
